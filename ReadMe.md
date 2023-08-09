@@ -115,7 +115,11 @@ curl -X POST -H "Content-Type: application/json" -d '[{"map_title": "Organizatio
 Here is an example response you might receive:
 
 ```json
-["Business"]
+[
+  {
+    "prediction": "Business"
+  }
+]
 ```
 
 This response is an array of category predictions corresponding to the instances you sent in the request. In this case, the first instance was predicted to belong to the "Business" category, and the second instance was predicted to belong to the "Technology" category.
