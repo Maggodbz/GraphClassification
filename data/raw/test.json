@@ -1,42 +1,37 @@
 [
   {
-    "map_title": "Organizational Structure",
-    "idea_title": "Hierarchical model"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123147,
+    "idea_parent_id": null,
+    "idea_title": "My first mindmap"
   },
   {
-    "map_title": "Software Development Life Cycle",
-    "idea_title": "Waterfall model"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123148,
+    "idea_parent_id": 123147,
+    "idea_title": "Ideas for my novel"
   },
   {
-    "map_title": "Environmental Sustainability",
-    "idea_title": "Reduce, Reuse, Recycle"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123149,
+    "idea_parent_id": 123147,
+    "idea_title": "Project management tips"
   },
   {
-    "map_title": "Cognitive Psychology Principles",
-    "idea_title": "Cognitive Dissonance"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123150,
+    "idea_parent_id": 123147,
+    "idea_title": "Marketing strategies"
   },
   {
-    "map_title": "Machine Learning Overview",
-    "idea_title": "Supervised Learning"
-  },
-  {
-    "map_title": "The Solar System",
-    "idea_title": "Planets and their characteristics"
-  },
-  {
-    "map_title": "Corporate Finance Basics",
-    "idea_title": "Capital Budgeting"
-  },
-  {
-    "map_title": "Web Development Tools",
-    "idea_title": "Front-end development"
-  },
-  {
-    "map_title": "Artificial Intelligence vs Machine Learning",
-    "idea_title": "Comparison of AI and ML"
-  },
-  {
-    "map_title": "Nutrition and Health",
-    "idea_title": "Macronutrients and micronutrients"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123151,
+    "idea_parent_id": 123147,
+    "idea_title": "Innovative tech solutions"
   }
 ]
