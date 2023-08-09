@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
 from notebooks.src.data_utils import preprocess_text
@@ -17,34 +17,39 @@ def predict():
         # Get the data from the POST request
         data = request.get_json(force=True)
 
-        predictions = []
-        for instance in data:
-            # Check if the required fields are in the data
-            if 'map_title' not in instance or 'idea_title' not in instance:
-                return 'Error: Each instance must contain map_title and idea_title.', 400
+        # Create a DataFrame from the provided data
+        df = pd.DataFrame(data)
 
-            # Preprocess the data
-            map_title_processed = preprocess_text(instance['map_title'])
-            idea_title_processed = preprocess_text(instance['idea_title'])
-            text_processed = map_title_processed + ' ' + idea_title_processed
+        # Handle missing values and duplicates in the input data
+        df.dropna(inplace=True)
+        df.drop_duplicates(inplace=True)
 
-            # Transform the data using the vectorizer
-            tfidf = vectorizer.transform([text_processed])
+        # Apply the preprocess_text function
+        df['idea_title_processed'] = df['idea_title'].apply(preprocess_text)
 
-            # Make prediction
-            prediction = model.predict(tfidf)
+        # Group by map_id to aggregate idea titles
+        grouped_df = df.groupby('map_id').agg({
+            'idea_title_processed': ' '.join,
+            'map_title': 'first'
+        }).reset_index()
 
-            # Add the prediction to the list of predictions
-            predictions.append({'map_title': instance['map_title'], 'idea_title': instance['idea_title'],
-                               'prediction': label_encoder.inverse_transform(prediction)[0]})
+        # Concatenate map_title and aggregated idea_title_processed
+        grouped_df['text_processed'] = grouped_df['map_title'] + ' ' + grouped_df['idea_title_processed']
 
-        # Return the predictions
-        return predictions
+        # Transform the concatenated text using the loaded TfidfVectorizer
+        tfidf_matrix = vectorizer.transform(grouped_df['text_processed'])
+
+        # Make predictions using the loaded model
+        preds = model.predict(tfidf_matrix)
+
+        # Decode the predictions using the loaded LabelEncoder
+        preds_decoded = label_encoder.inverse_transform(preds)
+
+        return jsonify(predictions=preds_decoded.tolist())
 
     except Exception as e:
         # If an error occurs, return the error message
         return f'Error: {str(e)}', 500
-
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

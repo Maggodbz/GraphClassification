@@ -1,6 +1,8 @@
+
+
 # Category Analysis Project
 
-This repository contains scripts and src for a category analysis project. The main goal of the project is to predict the category of a mindmap based on its title and ideas.
+This repository contains scripts and notebooks for a category analysis project. The main goal of the project is to predict the category of a mindmap based on its title and ideas.
 
 ## Project Structure
 
@@ -32,6 +34,7 @@ E:\Repos\category
 |   explore.ipynb
 |   inference.ipynb
 |   train.ipynb
+|   visualize_Graph.ipynb
 ```
 
 ## Description of the Files
@@ -45,6 +48,7 @@ E:\Repos\category
 - `notebooks/src/explore.ipynb`: This notebook contains the exploratory data analysis.
 - `notebooks/src/inference.ipynb`: This notebook contains the code for making predictions with the trained model.
 - `notebooks/src/train.ipynb`: This notebook contains the code for training the model.
+- `notebooks/src/visualize_Graph.ipynb`: This notebook is used for visualizing data as graphs.
 
 ## How to Use
 
@@ -52,8 +56,8 @@ E:\Repos\category
 2. Run `data_preperation.ipynb` to preprocess and encode the raw data.
 3. Run `train.ipynb` to train the logistic regression model.
 4. Run `inference.ipynb` to make predictions using the trained model.
-5. Run `app.py` to start a Flask application that serves the model. You can make POST requests to `http://localhost:5000/predict` to get predictions.
-
+5. Run `visualize_Graph.ipynb` to visualize data.
+6. Run `app.py` to start a Flask application that serves the model. You can make POST requests to `http://localhost:5000/predict` to get predictions.
 
 ## Example HTTP Request and Response
 
@@ -64,14 +68,42 @@ Here is an example of how to structure your POST request:
 ```json
 [
   {
-    "map_title": "Organizational Structure",
-    "idea_title": "Hierarchical model"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123147,
+    "idea_parent_id": null,
+    "idea_title": "My first mindmap"
   },
   {
-    "map_title": "Software Development Life Cycle",
-    "idea_title": "Waterfall model"
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123148,
+    "idea_parent_id": 123147,
+    "idea_title": "Ideas for my novel"
+  },
+  {
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123149,
+    "idea_parent_id": 123147,
+    "idea_title": "Project management tips"
+  },
+  {
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123150,
+    "idea_parent_id": 123147,
+    "idea_title": "Marketing strategies"
+  },
+  {
+    "map_id": 123147,
+    "map_title": "PFK/Risikomanagement",
+    "idea_id": 123151,
+    "idea_parent_id": 123147,
+    "idea_title": "Innovative tech solutions"
   }
 ]
+
 ```
 
 You can use `curl` to make the POST request:
@@ -83,18 +115,7 @@ curl -X POST -H "Content-Type: application/json" -d '[{"map_title": "Organizatio
 Here is an example response you might receive:
 
 ```json
-[
-  {
-    "map_title": "Organizational Structure",
-    "idea_title": "Hierarchical model",
-    "prediction": "Business"
-  },
-  {
-    "map_title": "Software Development Life Cycle",
-    "idea_title": "Waterfall model",
-    "prediction": "Technology"
-  }
-]
+["Business"]
 ```
 
 This response is an array of category predictions corresponding to the instances you sent in the request. In this case, the first instance was predicted to belong to the "Business" category, and the second instance was predicted to belong to the "Technology" category.
@@ -102,3 +123,7 @@ This response is an array of category predictions corresponding to the instances
 Please note that the actual categories you receive in the response will depend on the data you send in the request.
 
 Remember to replace `localhost` and `5000` with the actual hostname and port number if your Flask application is hosted somewhere other than your local machine.
+
+---
+
+Would you like this README content in a specific file format or is the displayed content sufficient?
